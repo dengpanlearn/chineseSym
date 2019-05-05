@@ -33,12 +33,12 @@ public:
 
 public:
 	void InitSymbolGenerator(int* pSymbolGroups, int* pSymbolsPerGroup);
-	BOOL NextSymbolGroup(QList<QImage* >symbolImgs);
+	BOOL NextSymbolGroup(QList<QImage* >&symbolImgs);
 
 protected:
-	virtual void InitGenerator(SymbolGeneratorParam* pParam, int* pSymbolGroups, int* pSymbolsPerGroup)=0;
+	virtual UINT InitGenerator(SymbolGeneratorParam* pParam, int* pSymbolGroups, int* pSymbolsPerGroup)=0;
 	virtual UINT GetNextSymbolValue(UINT curSymbolVaule)=0;
-	virtual void GeneratorNextGroup(SymbolGeneratorParam* pParam, UINT symbolValu, QList<QImage* >symbolImgs) = 0;
+	virtual void GeneratorNextGroup(SymbolGeneratorParam* pParam, UINT symbolValue, QList<QImage* >& symbolImgs) = 0;
 
 private:
 	SymbolGeneratorParam m_param;

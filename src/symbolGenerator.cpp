@@ -9,6 +9,7 @@
 
 CSymbolGenerator::CSymbolGenerator(SymbolGeneratorParam* pParam)
 {
+	m_curSymbolVal = 0;
 	memcpy(&m_param, pParam, sizeof(SymbolGeneratorParam));
 }
 
@@ -20,19 +21,17 @@ CSymbolGenerator::~CSymbolGenerator()
 
 void CSymbolGenerator::InitSymbolGenerator(int* pSymbolGroups, int* pSymbolsPerGroup)
 {
-	InitGenerator(&m_param, pSymbolGroups, pSymbolsPerGroup);
+	m_curSymbolVal = InitGenerator(&m_param, pSymbolGroups, pSymbolsPerGroup);
 }
 
-BOOL CSymbolGenerator::NextSymbolGroup(QList<QImage* >symbolImgs)
+BOOL CSymbolGenerator::NextSymbolGroup(QList<QImage* >& symbolImgs)
 {
 	if (m_curSymbolVal > m_param.symbolEnd)
 		return FALSE;
 
-	UINT curSymbolVal = GetNextSymbolValue(m_curSymbolVal);
+	GeneratorNextGroup(&m_param, m_curSymbolVal, symbolImgs);
 
-	GeneratorNextGroup(&m_param, curSymbolVal, symbolImgs);
-
-	m_curSymbolVal = curSymbolVal;
+	m_curSymbolVal = GetNextSymbolValue(m_curSymbolVal);
 	
 	return TRUE;
 }
